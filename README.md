@@ -302,9 +302,7 @@ void setup() {
     displayFreeSpiffs();                 // Print SPIFFS usage
 }
 
-void loop() {
-    // Nothing here
-}
+void loop() {}
 ```
 
 ---
