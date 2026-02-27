@@ -2,10 +2,12 @@
 
 [![PlatformIO](https://img.shields.io/badge/PlatformIO-Ready-orange?logo=platformio&logoColor=white)](https://platformio.org/)
 [![LVGL](https://img.shields.io/badge/LVGL-9.x-blueviolet?logo=lvgl&logoColor=white)](https://github.com/lvgl/lvgl)
+[![TFT_eSPI](https://img.shields.io/badge/Display-TFT__eSPI-blue)](https://github.com/Bodmer/TFT_eSPI)
+[![LovyanGFX](https://img.shields.io/badge/Display-LovyanGFX-orange)](https://github.com/lovyan03/LovyanGFX)
 [![FreeRTOS](https://img.shields.io/badge/FreeRTOS-Enabled-00A9E0?logo=freertos&logoColor=white)](https://www.freertos.org/)   
 [![PSRAM](https://img.shields.io/badge/PSRAM-Supported-green)](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-guides/flash_psram_config.html)
 [![DMA](https://img.shields.io/badge/DMA-Accelerated-critical)](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-guides/memory-types.html)
-[![LCD_CAM](https://img.shields.io/badge/Parallel_8bit-LCD__CAM-blue)](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-reference/peripherals/lcd/index.html)   
+[![LCD_CAM](https://img.shields.io/badge/Parallel_8bit-LCD__CAM-blue)](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-reference/peripherals/lcd/index.html)
 [![GT911](https://img.shields.io/badge/Touch-GT911-success)](https://github.com/milad-nikpendar/initGT911)
 [![XPT2046](https://img.shields.io/badge/Touch-XPT2046-yellow)](https://github.com/PaulStoffregen/XPT2046_Touchscreen)   
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
