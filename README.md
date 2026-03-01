@@ -62,6 +62,7 @@ project/
 │       ├── actions.c / actions.h
 │
 │   ├── main.cpp
+│   ├── config.h
 │
 ├── project.eez-project
 ├── platformio.ini
