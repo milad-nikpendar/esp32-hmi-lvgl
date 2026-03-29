@@ -32,7 +32,7 @@ void displayFreeSketch()
   size_t usedSketch = ESP.getSketchSize();
   size_t freeSketch = sketchSize - usedSketch;
 
-  Serial.printf("[SKETCH] Total: %s\tFree: %s\t\tUsed: %s (%.1f%%)\n",
+  Serial.printf("[SKETCH] Total: %s\tFree: %s\t\tUsed: %s (%.1f%% used)\n",
                 humanReadableSize(sketchSize, 2).c_str(),
                 humanReadableSize(freeSketch, 2).c_str(),
                 humanReadableSize(usedSketch, 2).c_str(),
@@ -48,7 +48,7 @@ void displayFreeHeap()
   size_t usedHeap = heapSize - freeHeap;
   size_t maxAllocHeap = ESP.getMaxAllocHeap();
 
-  Serial.printf("[HEAP]   Total: %s\tFree: %s\tMaxBlock: %s\tUsed: %s (%.1f%%)\n",
+  Serial.printf("[HEAP]   Total: %s\tFree: %s\tMaxBlock: %s\tUsed: %s (%.1f%% used)\n",
                 humanReadableSize(heapSize, 2).c_str(),
                 humanReadableSize(freeHeap, 2).c_str(),
                 humanReadableSize(maxAllocHeap, 2).c_str(),
@@ -71,7 +71,7 @@ void displayFreePsram()
   size_t usedPsram = psramSize - freePsram;
   size_t maxAllocPsram = ESP.getMaxAllocPsram();
 
-  Serial.printf("[PSRAM]  Total: %s\tFree: %s\tMaxBlock: %s\tUsed: %s (%.1f%%)\n",
+  Serial.printf("[PSRAM]  Total: %s\tFree: %s\tMaxBlock: %s\tUsed: %s (%.1f%% used)\n",
                 humanReadableSize(psramSize, 2).c_str(),
                 humanReadableSize(freePsram, 2).c_str(),
                 humanReadableSize(maxAllocPsram, 2).c_str(),
