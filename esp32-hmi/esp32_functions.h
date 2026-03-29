@@ -1,5 +1,5 @@
 /*
-   esp32_functions header V1.0.0
+   esp32_functions header V1.1.0
    Created by Milad Nikpendar
 */
 #ifndef ESP32_FUNCTIONS_H
@@ -11,6 +11,7 @@
 #include <FS.h>
 #include <SPIFFS.h>
 
+// Function to convert bytes to human-readable format
 String humanReadableSize(const size_t bytes, int num = 0)
 {
   if (bytes < 1024)
@@ -23,53 +24,83 @@ String humanReadableSize(const size_t bytes, int num = 0)
     return String((float)bytes / 1024.0 / 1024.0 / 1024.0, num) + " GB";
 }
 
+// Function to display chip information
+void displayFreeSketch()
+{
+  // Sketch info
+  size_t sketchSize = ESP.getFreeSketchSpace();
+  size_t usedSketch = ESP.getSketchSize();
+  size_t freeSketch = sketchSize - usedSketch;
+
+  Serial.printf("[SKETCH] Total: %s\tFree: %s\t\tUsed: %s (%.1f%%)\n",
+                humanReadableSize(sketchSize, 2).c_str(),
+                humanReadableSize(freeSketch, 2).c_str(),
+                humanReadableSize(usedSketch, 2).c_str(),
+                (float)(usedSketch) * 100.0 / sketchSize);
+}
+
+// Function to display heap information
 void displayFreeHeap()
 {
   // Heap info
   size_t heapSize = ESP.getHeapSize();
   size_t freeHeap = ESP.getFreeHeap();
+  size_t usedHeap = heapSize - freeHeap;
   size_t maxAllocHeap = ESP.getMaxAllocHeap();
 
-  Serial.printf("[HEAP]  Total: %s\tFree: %s\tMaxBlock: %s\tUsed: %s (%.1f%%)\n",
+  Serial.printf("[HEAP]   Total: %s\tFree: %s\tMaxBlock: %s\tUsed: %s (%.1f%%)\n",
                 humanReadableSize(heapSize, 2).c_str(),
                 humanReadableSize(freeHeap, 2).c_str(),
                 humanReadableSize(maxAllocHeap, 2).c_str(),
-                humanReadableSize(heapSize - freeHeap, 2).c_str(),
-                (float)(heapSize - freeHeap) * 100.0 / heapSize);
+                humanReadableSize(usedHeap, 2).c_str(),
+                (float)(usedHeap) * 100.0 / heapSize);
 }
 
+// Function to display PSRAM information
 void displayFreePsram()
 {
+  if (!psramFound())
+  {
+    Serial.println("[PSRAM] PSRAM not found, using internal RAM only.");
+    return;
+  }
+
   // PSRAM info
   size_t psramSize = ESP.getPsramSize();
   size_t freePsram = ESP.getFreePsram();
+  size_t usedPsram = psramSize - freePsram;
   size_t maxAllocPsram = ESP.getMaxAllocPsram();
 
-  Serial.printf("[PSRAM] Total: %s\tFree: %s\tMaxBlock: %s\tUsed: %s (%.1f%%)\n",
+  Serial.printf("[PSRAM]  Total: %s\tFree: %s\tMaxBlock: %s\tUsed: %s (%.1f%%)\n",
                 humanReadableSize(psramSize, 2).c_str(),
                 humanReadableSize(freePsram, 2).c_str(),
                 humanReadableSize(maxAllocPsram, 2).c_str(),
-                humanReadableSize(psramSize - freePsram, 2).c_str(),
-                (float)(psramSize - freePsram) * 100.0 / psramSize);
+                humanReadableSize(usedPsram, 2).c_str(),
+                (float)(usedPsram) * 100.0 / psramSize);
 }
 
-void displayFreeSpiffs() {
-  if (!SPIFFS.begin(true)) {
+// Function to read the MAC address and return it as a string
+void displayFreeSpiffs()
+{
+  if (!SPIFFS.begin())
+  {
     Serial.println("[SPIFFS] Mount failed!");
     return;
   }
 
-  size_t totalBytes = SPIFFS.totalBytes();
-  size_t usedBytes  = SPIFFS.usedBytes();
-  size_t freeBytes  = totalBytes - usedBytes;
+  // SPIFFS info
+  size_t spiffsSize = SPIFFS.totalBytes();
+  size_t usedSpiffs = SPIFFS.usedBytes();
+  size_t freeSpiffs = spiffsSize - usedSpiffs;
 
   Serial.printf("[SPIFFS] Total: %s\tUsed: %s\tFree: %s\t(%.1f%% used)\n",
-                humanReadableSize(totalBytes, 2).c_str(),
-                humanReadableSize(usedBytes, 2).c_str(),
-                humanReadableSize(freeBytes, 2).c_str(),
-                (float)usedBytes * 100.0 / totalBytes);
+                humanReadableSize(spiffsSize, 2).c_str(),
+                humanReadableSize(usedSpiffs, 2).c_str(),
+                humanReadableSize(freeSpiffs, 2).c_str(),
+                (float)usedSpiffs * 100.0 / spiffsSize);
 }
 
+// Function to read the MAC address and return it as a string
 const char *readMacAddress()
 {
   WiFi.mode(WIFI_STA);
@@ -90,6 +121,7 @@ const char *readMacAddress()
   return "Failed to read MAC address";
 }
 
+// Function to get a unique chip ID based on the MAC address and chip revision
 String chipID()
 {
   uint32_t chipId = 0;
@@ -106,6 +138,8 @@ String chipID()
 
   return String(chipId) + String(baseMacChr);
 }
+
+// Function to display chip information
 void chipInfo()
 {
   Serial.printf("ESP32 Chip model = %s Rev %d\n", ESP.getChipModel(), ESP.getChipRevision());
@@ -121,19 +155,23 @@ void chipInfo()
   Serial.print(getApbFrequency() / 1000000.0, 1);
   Serial.println("MHz");
   Serial.print("FLASH SIZE: \t");
-  Serial.println(humanReadableSize(ESP.getFlashChipSize(), 3));
-  Serial.print("OTA Size: \t");
-  Serial.println(humanReadableSize(ESP.getFreeSketchSpace(), 3));
-  Serial.print("Sketch Size: \t");
-  Serial.println(humanReadableSize(ESP.getSketchSize(), 3));
+  Serial.println(humanReadableSize(ESP.getFlashChipSize(), 2));
+  Serial.print("SKETCH SIZE: \t");
+  Serial.println(humanReadableSize(ESP.getFreeSketchSpace(), 2));
   Serial.print("RAM SIZE: \t");
-  Serial.println(humanReadableSize(ESP.getHeapSize(), 0));
-  Serial.print("FREE RAM: \t");
-  Serial.println(humanReadableSize(ESP.getFreeHeap(), 0));
-  Serial.print("MAX RAM ALLOC: \t");
-  Serial.println(humanReadableSize(ESP.getMaxAllocHeap(), 0));
-  Serial.print("FREE PSRAM: \t");
-  Serial.println(humanReadableSize(ESP.getFreePsram(), 0));
+  Serial.println(humanReadableSize(ESP.getHeapSize(), 2));
+
+  if (ESP.getPsramSize() > 0)
+  {
+    Serial.print("PSRAM SIZE: \t");
+    Serial.println(humanReadableSize(ESP.getPsramSize(), 2));
+  }
+
+  if (SPIFFS.totalBytes() > 0)
+  {
+    Serial.print("SPIFFS SIZE: \t");
+    Serial.println(humanReadableSize(SPIFFS.totalBytes(), 2));
+  }
 }
 
 // Function to format size in bytes to human-readable format
@@ -151,4 +189,4 @@ const char *formatSize(uint64_t bytes)
 
   return output;
 }
-#endif //ESP32_FUNCTIONS_H
+#endif // ESP32_FUNCTIONS_H
