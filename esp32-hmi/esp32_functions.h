@@ -112,7 +112,7 @@ void chipInfo()
   Serial.printf("This chip has %d cores\n", ESP.getChipCores());
   Serial.print("Chip ID: \t");
   Serial.println(chipID());
-  Serial.print("SDK: \t");
+  Serial.print("MCU SDK: \t");
   Serial.println(ESP.getSdkVersion());
   Serial.print("CPU FREQ: \t");
   Serial.print(getCpuFrequencyMhz());
