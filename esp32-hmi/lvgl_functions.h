@@ -80,7 +80,12 @@ void lvgl_task(void *pvParameters); // LVGL task for RTOS
 
 typedef void (*hmi_user_callback_t)(void);
 
-void hmi_touch_init(hmi_user_callback_t cb = nullptr);         // touch init
+#ifdef USE_CAP_TOUCH
+void hmi_touch_init(hmi_user_callback_t cb = nullptr); // touch init
+#else
+void hmi_touch_init(); // touch init
+#endif
+
 void hmi_touch_read(lv_indev_t *indev, lv_indev_data_t *data); // touch read function
 
 void hmi_keypad_init();                                         // keypad init
