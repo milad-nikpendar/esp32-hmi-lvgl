@@ -18,6 +18,7 @@
 
 #define USE_PSRAM // uncomment this line to use PSRAM (if available)
 // #define USE_DMA   // uncomment this line to use SPI DMA (faster, but more memory usage)
+// #define USE_I18N  // uncomment this line to use internationalization (i18n) features
 
 /* Set to your screen rotation */
 /*
@@ -35,6 +36,7 @@
 #include "../ui/ui.h"      // include the generated UI header file
 #include "../ui/vars.h"    // for use native variables you must create vars.cpp or vars.c file and add your variables there
 #include "../ui/actions.h" // for use native actions you must create actions.cpp or actions.c file and add your actions there
+#include "../ui/screens.h" // for use screen objects in your code you can declare them in screens.h and define them in screens.cpp
 
 /*Set to your screen resolution*/
 #if defined(ESP32_HMI_28TFT) || defined(ESP32_HMI_24TFT)
@@ -61,31 +63,33 @@ typedef struct
   uint16_t *px_map;
 } tft_flush_req_t;
 
- #define INIT_TFT_RTOS // Use RTOS TFT task
+#define INIT_TFT_RTOS // Use RTOS TFT task
 // #define INIT_PARALLEL_RTOS // Use RTOS Parallel task
 // #define TFT_PARALLEL_8_BIT // 8 bit parallel interface
 // #define ESP32_PARALLEL     // ESP32 parallel interface
-
-#ifdef USE_DMA
-#define ESP32_DMA // use DMA for parallel writes
-#endif            // USE_DMA
 #endif
 
 #include "../config.h"
 
-extern uint32_t flush_fps;
-
-void tft_task(void *pvParameters);  // TFT task for RTOS
-void lvgl_task(void *pvParameters); // LVGL task for RTOS
-
 typedef void (*hmi_user_callback_t)(void);
 
-#ifdef USE_CAP_TOUCH
-void hmi_touch_init(hmi_user_callback_t cb = nullptr); // touch init
-#else
-void hmi_touch_init(); // touch init
+extern uint32_t flush_fps; // FPS calculated from flushes, updated every 20ms
+
+/* lv_i18n functions */
+#ifdef USE_I18N
+extern userLanguage language;          // Global variable to hold the current language setting
+void translations_init();       // Initialize translations
+void translations_set_locale(); // Apply the current language setting to the UI
 #endif
 
+#ifdef INIT_TFT_RTOS
+extern hmi_user_callback_t user_tft_callback; // User callback for TFT task
+void tft_task(void *pvParameters);            // TFT task for RTOS
+#endif
+
+void lvgl_task(void *pvParameters); // LVGL task for RTOS
+
+void hmi_touch_init(hmi_user_callback_t cb = nullptr);         // touch init
 void hmi_touch_read(lv_indev_t *indev, lv_indev_data_t *data); // touch read function
 
 void hmi_keypad_init();                                         // keypad init
