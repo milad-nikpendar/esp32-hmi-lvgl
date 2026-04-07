@@ -46,20 +46,23 @@ project/
 ├── src/
 │
 │   ├── esp-hmi/
-│       ├── lvgl_functions.*
-│       ├── lvgl_parallel_task.*
-│       ├── lvgl_tft_task.*
-│       ├── lvgl_touch_gt911.*
-│       ├── lvgl_touch_xpt2046.*
-│       ├── lvgl_keypad_push.*
-│       ├── lvgl_custom_alloc.*
-│       ├── esp32_functions.h
+│       ├── esp32_functions.h*
+|       ├── lv_i18n_functions.cpp*
+│       ├── lvgl_custom_alloc.cpp*
+│       ├── lvgl_functions.cpp*
+│       ├── lvgl_functions.h*
+│       ├── lvgl_keypad_push.cpp*
+│       ├── lvgl_parallel_task.cpp*
+│       ├── lvgl_tft_task.cpp*
+│       ├── lvgl_touch_gt911.cpp*
+│       ├── lvgl_touch_xpt2046.cpp*
 │
 │   ├── ui/
 │       ├── ui.h
 │       ├── ui.c
 │       ├── vars.c / vars.h
 │       ├── actions.c / actions.h
+│       ├── lv_i18n.c / lv_i18n.h**
 │
 │   ├── main.cpp
 │   ├── config.h
