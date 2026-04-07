@@ -3,9 +3,11 @@
 #ifdef INIT_TFT_RTOS
 TFT_eSPI tft = TFT_eSPI(TFT_HOR_RES, TFT_VER_RES);
 QueueHandle_t tft_flush_queue;
+hmi_user_callback_t user_tft_callback = nullptr;
 
 void tft_task(void *pvParameters)
 {
+    const TickType_t delay = pdMS_TO_TICKS(5);
     tft_flush_req_t req;
 
     tft.begin();                            // Initialize TFT
@@ -36,6 +38,11 @@ void tft_task(void *pvParameters)
 
             lv_disp_flush_ready(req.disp);
         }
+
+        if (user_tft_callback)
+            user_tft_callback();
+
+        vTaskDelay(delay);
     }
 }
 #endif // INIT_TFT_RTOS
