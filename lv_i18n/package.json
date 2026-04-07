@@ -1,5 +1,5 @@
 {
-  "name": "hermes",
+  "name": "milad_nikpendar",
   "version": "1.0.0",
   "scripts": {
     "i18n:en": "lv_i18n compile -t \"./translations/*.yml\" -o \"./src/ui\" -l en",
