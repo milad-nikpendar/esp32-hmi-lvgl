@@ -1,0 +1,14 @@
+{
+  "name": "hermes",
+  "version": "1.0.0",
+  "scripts": {
+    "i18n:en": "lv_i18n compile -t \"./translations/*.yml\" -o \"./src/ui\" -l en",
+    "i18n:fa": "lv_i18n compile -t \"./translations/*.yml\" -o \"./src/ui\" -l fa",
+    "i18n:ar": "lv_i18n compile -t \"./translations/*.yml\" -o \"./src/ui\" -l ar",
+    "i18n": "npm run i18n:en && npm run i18n:fa && npm run i18n:ar"
+  },
+  "private": true,
+  "dependencies": {
+    "lv_i18n": "^0.2.1"
+  }
+}
