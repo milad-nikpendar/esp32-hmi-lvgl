@@ -2,7 +2,7 @@
 
 /*LVGL draw into this buffer, 1/10 screen size usually works well. The size is in bytes*/
 #define BUF_PIXELS (TFT_HOR_RES * TFT_VER_RES)
-// #define BUF_PIXELS (TFT_HOR_RES * 80)
+// #define BUF_PIXELS (TFT_HOR_RES * 20)
 #define BUF_SIZE (BUF_PIXELS * sizeof(lv_color_t))
 static lv_color_t *draw_buf1 = nullptr;
 static lv_color_t *draw_buf2 = nullptr;
@@ -41,6 +41,9 @@ static uint32_t my_tick(void) { return millis(); }
 void hmi_lvgl_init(hmi_user_callback_t cb)
 {
   user_lvgl_callback = cb;
+#ifdef USE_I18N
+  translations_init();
+#endif // USE_I18N
   lv_init();
 
   /*Set a tick source so that LVGL will know how much time elapsed. */
