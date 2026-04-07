@@ -12,7 +12,7 @@
 [![XPT2046](https://img.shields.io/badge/Touch-XPT2046-yellow)](https://github.com/PaulStoffregen/XPT2046_Touchscreen)   
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub release](https://img.shields.io/github/v/release/milad-nikpendar/esp32-hmi-lvgl)](https://github.com/milad-nikpendar/esp32-hmi-lvgl/releases)
-[![Author](https://img.shields.io/badge/Author-milad--nikpendar-blueviolet)](https://github.com/milad-nikpendar)
+[![Author](https://img.shields.io/badge/Author-milad--nikpendar-blue)](https://github.com/milad-nikpendar)
 
 ### High‑Performance HMI Framework for ESP32 + LVGL + FreeRTOS
 
