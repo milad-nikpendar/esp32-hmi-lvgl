@@ -21,7 +21,7 @@ void tft_task(void *pvParameters)
 
     for (;;)
     {
-        if (xQueueReceive(tft_flush_queue, &req, portMAX_DELAY) == pdTRUE)
+        if (xQueueReceive(tft_flush_queue, &req, 0) == pdTRUE)
         {
             uint32_t w = req.area.x2 - req.area.x1 + 1;
             uint32_t h = req.area.y2 - req.area.y1 + 1;
